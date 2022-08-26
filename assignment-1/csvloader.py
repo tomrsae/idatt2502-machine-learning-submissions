@@ -1,21 +1,23 @@
 # This class is only meant to be used in this specific assignment.
-# There is hardly any error handling etc. and is therefore not fit for any other use.
+# There is no error handling etc. and is therefore likely not fit for any other use.
 
 import torch
 
 class CSVLoader:
-    def load(filename):
+    def load_tensors_from(filename):
         file = open(filename, 'r')
-        file.readline() # Skip first line, as this is used to indicate column names
+        columns = len(file.readline().split(','))
 
-        vals = []
+        tensors = [[] for i in range(columns)]
         for line in file:
             row = line.split(',')
             row[-1] = row[-1].replace('\n', '')
-            row = ([float(x) for x in row])
-            row = torch.tensor(row)
-            #row = numpy.array(row).astype(numpy.float)
 
-            vals.append(row)
+            for i, val in enumerate(row):
+                tensors[i].append(float(val))
 
-        return torch.tensor(vals)
+        axis_vals = []
+        for tensor in tensors:
+            axis_vals.append(torch.tensor(tensor).reshape(-1, 1))
+
+        return axis_vals
