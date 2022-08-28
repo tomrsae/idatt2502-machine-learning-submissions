@@ -8,23 +8,25 @@ LEARNING_RATE = 0.0001
 FILE_NAME = 'data/length_weight.csv'
 
 values = CSVLoader.load_tensors_from(FILE_NAME)
+length_data = values[0]
+weight_data = values[1]
 
 model = LinearRegressionModel()
 
 optimizer = torch.optim.SGD([model.W, model.b], LEARNING_RATE)
 for epoch in range(EPOCHS):
-    model.loss(values[0], values[1]).backward()
+    model.loss(length_data, weight_data).backward()
     optimizer.step()
 
     optimizer.zero_grad()
 
-print('W = %s, b = %s, loss = %s' % (model.W, model.b, model.loss(values[0], values[1])))
+print('W = %s, b = %s, loss = %s' % (model.W, model.b, model.loss(length_data, weight_data)))
 
-plt.plot(values[0], values[1], 'o', label='$(x^{(i)},y^{(i)})$')
+plt.plot(length_data, weight_data, 'o', label='$(x^{(i)},y^{(i)})$')
 plt.xlabel('Length')
 plt.ylabel('Weight')
 
-x = torch.tensor([[torch.min(values[0])], [torch.max(values[0])]])
+x = torch.tensor([[torch.min(length_data)], [torch.max(length_data)]])
 plt.plot(x, model.f(x).detach(), label='$\\hat y = f(x) = xW+b$')
 
 plt.legend()
