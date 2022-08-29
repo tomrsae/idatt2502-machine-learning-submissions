@@ -1,13 +1,16 @@
 # Class is retrieved from https://gitlab.com/ntnu-tdat3025/regression/linear-2d/-/blob/master/main.py
-# This code is authored by lecturer Ole Christian Eidheim, NOT ME. 
+# This code is authored by lecturer Ole Christian Eidheim, with modifications made by me. 
 
 import torch
 
 class LinearRegressionModel:
 
-    def __init__(self):
+    def __init__(self, three_dim=False):
         # Model variables
-        self.W = torch.tensor([[0.0]], requires_grad=True)  # requires_grad enables calculation of gradients
+        if three_dim:
+            self.W = torch.tensor([[0.0], [0.0]], requires_grad=True)
+        else:
+            self.W = torch.tensor([[0.0]], requires_grad=True)  # requires_grad enables calculation of gradients
         self.b = torch.tensor([[0.0]], requires_grad=True)
 
     # Predictor
