@@ -20,12 +20,12 @@ model = LinearRegressionModel(three_dim=True)
 
 optimizer = torch.optim.SGD([model.W, model.b], LEARNING_RATE)
 for epoch in range(EPOCHS):
-    model.loss(x, day_data).backward()
+    model.loss_f(x, day_data).backward()
     optimizer.step()
 
     optimizer.zero_grad()
 
-print('W = %s, b = %s, loss = %s' % (model.W, model.b, model.loss(x, day_data)))
+print('W = %s, b = %s, loss = %s' % (model.W, model.b, model.loss_f(x, day_data)))
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')

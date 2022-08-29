@@ -17,6 +17,13 @@ class LinearRegressionModel:
     def f(self, x):
         return x @ self.W + self.b  # @ corresponds to matrix multiplication
 
+    def g(self, x):
+        return 20 * torch.sigmoid(self.f(x)) + 31
+        #return 20 * torch.nn.functional.sigmoid(self.f(x).detach()) + 31
+
     # Uses Mean Squared Error
-    def loss(self, x, y):
+    def loss_f(self, x, y):
         return torch.mean(torch.square(self.f(x) - y))  # Can also use torch.nn.functional.mse_loss(self.f(x), y) to possibly increase numberical stability
+
+    def loss_g(self, x, y):
+        return torch.mean(torch.square(self.g(x) - y))

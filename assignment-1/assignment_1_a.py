@@ -15,12 +15,12 @@ model = LinearRegressionModel()
 
 optimizer = torch.optim.SGD([model.W, model.b], LEARNING_RATE)
 for epoch in range(EPOCHS):
-    model.loss(length_data, weight_data).backward()
+    model.loss_f(length_data, weight_data).backward()
     optimizer.step()
 
     optimizer.zero_grad()
 
-print('W = %s, b = %s, loss = %s' % (model.W, model.b, model.loss(length_data, weight_data)))
+print('W = %s, b = %s, loss = %s' % (model.W, model.b, model.loss_f(length_data, weight_data)))
 
 plt.plot(length_data, weight_data, 'o', label='$(x^{(i)},y^{(i)})$')
 plt.xlabel('Length')
