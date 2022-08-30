@@ -1,7 +1,11 @@
 import torch
 import matplotlib.pyplot as plt
+import matplotlib
 from csvloader import CSVLoader
 from linearregressionmodel import LinearRegressionModel
+from tqdm import tqdm
+
+matplotlib.use('WebAgg')
 
 EPOCHS = 1000000
 LEARNING_RATE = 0.0001 
@@ -14,7 +18,7 @@ weight_data = values[1]
 model = LinearRegressionModel()
 
 optimizer = torch.optim.SGD([model.W, model.b], LEARNING_RATE)
-for epoch in range(EPOCHS):
+for epoch in tqdm(range(EPOCHS)):
     model.loss_f(length_data, weight_data).backward()
     optimizer.step()
 
