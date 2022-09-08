@@ -14,7 +14,7 @@ train_y = torch.tensor([0.0, 1.0, 1.0, 0.0]).reshape(-1, 1)
 
 class NeuralXOR:
     def __init__(self):
-        self.W_1 = torch.tensor([[-0.37, -0.37], [-0.37, -0.37]], requires_grad=True)
+        self.W_1 = torch.tensor([[0.37, -0.37], [0.37, -0.37]], requires_grad=True)
         self.W_2 = torch.tensor([[0.37], [0.37]], requires_grad=True)
         self.b_1 = torch.tensor([[-0.17]], requires_grad=True)
         self.b_2 = torch.tensor([[-0.17]], requires_grad=True)
@@ -42,18 +42,7 @@ for epoch in tqdm(range(EPOCHS)):
     optimizer.step()
 
     optimizer.zero_grad()
-
-# print('W = %s, b = %s, loss = %s' % (model.W, model.b, model.loss_f(train_x, train_y)))
-
-# fig = plt.figure()
-# ax = fig.add_subplot(111, projection='3d')
-# ax.set_title('NAND operator')
-
-# ax.scatter3D(train_x[:, 0], train_x[:, 1], train_y, label='$x_1^{(i)}, x_2^{(i)}, y^{(i)}$')
-# ax.set_xlabel('$x_1$')
-# ax.set_ylabel('$x_2$')
-# ax.set_zlabel('$y$')
-
+    
 for tensor in train_x:
     predicted_val = model.f(tensor)
     print('x_1=%s, x_2=%s, f(x_1, x_2)=%s' % (tensor[0], tensor[1], predicted_val))
