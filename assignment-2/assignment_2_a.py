@@ -1,9 +1,9 @@
 import torch
 import matplotlib.pyplot as plt
-# import matplotlib
+import matplotlib
 from tqdm import tqdm
 
-# matplotlib.use('WebAgg')
+matplotlib.use('WebAgg')
 
 EPOCHS = 1000
 LEARNING_RATE = 10

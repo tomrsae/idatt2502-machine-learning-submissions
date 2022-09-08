@@ -1,10 +1,10 @@
 import torch
 import torchvision
 import matplotlib.pyplot as plt
-# import matplotlib
+import matplotlib
 from tqdm import tqdm
 
-# matplotlib.use('WebAgg')
+matplotlib.use('WebAgg')
 
 EPOCHS = 100
 LEARNING_RATE = 1
@@ -24,7 +24,7 @@ class NeuralMNIST:
         return x @ self.W + self.b
 
     def f(self, x):
-        return torch.softmax(self.logits(x))
+        return torch.softmax(self.logits(x), 1)
 
     def loss(self, x, y):
         return torch.nn.functional.cross_entropy(self.logits(x), y)
@@ -42,20 +42,15 @@ for epoch in tqdm(range(EPOCHS)):
 
     optimizer.zero_grad()
 
-print('W = %s, b = %s, loss = %s' % (model.W, model.b, model.loss(train_x, train_y)))
-
 mnist_test = torchvision.datasets.MNIST('./data', train=False, download=True)
 test_x = mnist_test.data.reshape(-1, DATASET_SIZE).float() / 255.0
 test_y = torch.zeros((mnist_test.targets.shape[0], 10))
 test_y[torch.arange(mnist_test.targets.shape[0]), mnist_test.targets] = 1
 
-predicted = model.f(test_x)
-i = 0
-for tensor in predicted:
-    if i < 20:
-        print("Actual: %s\nPredicted: %s\n" % (test_y[i], predicted))
-    i += 1
+accuracy = model.accuracy(test_x, test_y)
+print('Model accuracy on test data: %s' % accuracy)
 
-plt.imshow(train_x[0, :].reshape(28, 28))
-
-plt.show()
+print('Saving images')
+for i in tqdm(range(10)):
+    path = './visualized_MNIST_Ws/W_%d.png' % i
+    plt.imsave(path, model.W[:, i:i+1].reshape(28, 28).detach().numpy())

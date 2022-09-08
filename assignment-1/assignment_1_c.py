@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 matplotlib.use('WebAgg')
 
-EPOCHS = 1000000
+EPOCHS = 10000
 LEARNING_RATE = 0.000001
 FILE_NAME = 'data/day_head_circumference.csv'
 
